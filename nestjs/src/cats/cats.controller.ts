@@ -1,35 +1,28 @@
-import { Controller, Get, Req, Res, Post, HttpStatus } from '@nestjs/common';
-import { HttpCode, Param } from '@nestjs/common/decorators';
-// import { Request } from '@nestjs/common/decorators';
+import {
+  Controller,
+  Get,
+  Req,
+  Res,
+  Post,
+  Body,
+  HttpStatus,
+} from '@nestjs/common';
+
 import { Request } from 'express';
+import { CatsService } from './cats.service';
+import { CreateCatDto } from './create-cat.dto';
+import { Cat } from 'src/interfaces/cat.interface';
+
 @Controller('cats')
 export class CatsController {
+  constructor(private catsService: CatsService) {}
   @Post()
-  create(): string {
-    return 'This action asd';
+  async create(@Body() createCatDto: CreateCatDto) {
+    this.catsService.create(createCatDto);
   }
 
   @Get()
-  findAll(@Res({ passthrough: true }) res: Response) {
-    // res.status(HttpStatus.OK);
-    return ['123'];
+  async findAll(): Promise<Cat[]> {
+    return this.catsService.findAll();
   }
-
-  @Get(':id')
-  findOne(@Param('id') id: string): string {
-    return `this is ${id}`;
-  }
-  //   @Get(':id')
-  //   findOne(@Param() params): string {
-  //     console.log(params.id);
-  //     return `123 ${params.id}`;
-  //   }
-  // @Get('')
-  // findAll(@Req() request: Request): string {
-  //   return 'asdasd';
-  // }
-  //   @Get()
-  //   find(): string {
-  //     return 'ok';
-  //   }
 }
