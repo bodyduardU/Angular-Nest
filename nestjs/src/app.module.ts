@@ -6,8 +6,14 @@ import { logger } from './common/middleware/logger.middleware';
 import { CatsController } from './cats/cats.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { TodoModule } from './todo/todo.module';
+import { UserModule } from './user/user.module';
 @Module({
-  imports: [CatsModule, MongooseModule.forRoot('mongodb://localhost/nest'), TodoModule],
+  imports: [
+    CatsModule,
+    MongooseModule.forRoot('mongodb://localhost/nest'),
+    TodoModule,
+    UserModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
